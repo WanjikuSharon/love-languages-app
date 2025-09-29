@@ -116,9 +116,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  activeStartButton: {
-    opacity: 0.8,
-  },
   startButtonText: {
     color: Theme.primaryDarkColor,
     fontSize: 17,

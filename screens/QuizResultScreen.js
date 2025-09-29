@@ -212,11 +212,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 24,
   },
-  text: {
-    color: Theme.darkTextColor,
-    fontFamily: 'chasing-hearts',
-    fontSize: 24,
-  },
   buttons: {
     marginBottom: 48,
   },
@@ -236,11 +231,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     minWidth: 180,
     textAlign: 'center',
-  },
-  shareableResults: {
-    paddingHorizontal: 40,
-    paddingVertical: 40,
-    position: 'absolute',
-    width: 1200,
   },
 });

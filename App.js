@@ -1,15 +1,12 @@
 import { AppLoading, Asset, Font } from 'expo';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import { useScreens } from 'react-native-screens';
 import { createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
 
 import Sounds from './assets/Sounds';
 import HomeNavigator from './navigators/HomeNavigator';
 import Store from './store/Store';
-
-useScreens();
 
 const NavigationContainer = createAppContainer(HomeNavigator);
 
