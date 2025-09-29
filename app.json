@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Love Languages",
+    "description": "Find out your love language — the way you especially appreciate loved ones close to you in life.",
+    "slug": "love-languages",
+    "privacy": "public",
+    "githubUrl": "https://github.com/ide/love-languages",
+    "sdkVersion": "32.0.0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#9c27b0",
+    "icon": "./assets/external/heart-app-icon.png",
+    "splash": {
+      "backgroundColor": "#9c27b0",
+      "image": "./assets/external/heart-splash.png"
+    },
+    "assetBundlePatterns": [
+      "assets/fonts/*",
+      "assets/icons/*",
+      "assets/sounds/*"
+    ],
+    "scheme": "lovelanguages",
+    "ios": {
+      "bundleIdentifier": "io.expo.lovelanguages",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "io.expo.lovelanguages"
+    }
+  }
+}
