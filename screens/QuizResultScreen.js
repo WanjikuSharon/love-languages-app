@@ -1,6 +1,6 @@
-import * as FileSystem from 'expo-file-system';
-import * as MediaLibrary from 'expo-media-library';
-import { captureRef } from 'react-native-view-shot';
+// import * as FileSystem from 'expo-file-system';
+// import * as MediaLibrary from 'expo-media-library';
+// import { captureRef } from 'react-native-view-shot';
 import invariant from 'invariant';
 import countBy from 'lodash/countBy';
 import maxBy from 'lodash/maxBy';
@@ -34,61 +34,11 @@ export default function QuizResultScreen() {
   });
 
   const saveResultsAsync = async () => {
-    const shouldSave = await Prompt.promptAsync(
-      'Save to Photos?',
-      'Would you like to save a snapshot of your results to your photos?',
-      { acceptText: 'Save', cancelText: 'Cancel' }
-    );
-
-    if (!shouldSave) {
-      return;
-    }
-
-    const permissionName = Platform.OS === 'ios' ? 'Photos' : 'Camera';
-    const { status } = await MediaLibrary.requestPermissionsAsync();
-    if (status !== 'granted') {
-      await Prompt.alertAsync(
-        `${permissionName} Permission Denied`,
-        `This app needs permission to save a snapshot to your camera roll. Enable the ${permissionName} permission for this app in your phone's settings. In the meantime, try taking a screenshot yourself instead.`,
-        { acceptText: 'OK' }
-      );
-      return;
-    }
-
-    let screenshotUri;
-    try {
-      screenshotUri = await captureRef(savableResultsViewRef, {
-        format: 'png',
-        quality: 1,
-      });
-    } catch (e) {
-      await Prompt.alertAsync(
-        "Couldn't Save Snapshot",
-        "Something went wrong taking a snapshot of your results. Sorry about that. In the meantime, try taking a screenshot yourself instead.",
-        { acceptText: 'OK' }
-      );
-      return;
-    }
-
-    try {
-      await MediaLibrary.saveToLibraryAsync(screenshotUri);
-    } catch (e) {
-      await Prompt.alertAsync(
-        "Couldn't Save Snapshot",
-        `This app needs permission to save a snapshot to your photos. Enable the ${permissionName} permission for this app in your phone's settings. In the meantime, try taking a screenshot yourself instead.`,
-        { acceptText: 'OK' }
-      );
-      return;
-    } finally {
-      await FileSystem.deleteAsync(screenshotUri, { idempotent: true });
-    }
-
+    // Temporarily disabled save functionality
     await Prompt.alertAsync(
-      'Results Saved',
-      'You can now find a snapshot of your results in your device\'s photos.',
-      {
-        acceptText: 'OK',
-      }
+      'Save Feature Disabled',
+      'The save feature is temporarily disabled. Please take a screenshot instead.',
+      { acceptText: 'OK' }
     );
   };
 
