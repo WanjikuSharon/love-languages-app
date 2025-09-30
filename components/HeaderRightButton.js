@@ -1,10 +1,8 @@
-import { GestureHandler } from 'expo';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 import Theme from '../styles/Theme';
-
-const { BorderlessButton } = GestureHandler;
 
 export default class HeaderRightButton extends React.Component {
   static propTypes = {
