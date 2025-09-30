@@ -1,51 +1,41 @@
-import { GestureHandler } from 'expo';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
-import { connect } from 'react-redux';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 import Sounds from '../assets/Sounds';
 
-const { BorderlessButton } = GestureHandler;
+export default function QuizIntroScreen() {
+  const navigation = useNavigation();
+  const numberOfQuestions = useSelector(state => state.quiz.questions.length);
 
-class QuizIntroScreen extends React.Component {
-  static propTypes = {
-    navigation: PropTypes.object.isRequired,
-    numberOfQuestions: PropTypes.number.isRequired,
-  };
-
-  static navigationOptions = {
-    title: `Take the Quiz`,
-  };
-
-  render() {
-    return (
-      <ScrollView
-        alwaysBounceVertical={false}
-        contentContainerStyle={styles.contentContainer}
-        style={styles.container}>
-        <Text style={styles.text}>
-          The love languages quiz has {this.props.numberOfQuestions}{' '}
-          {this.props.numberOfQuestions === 1 ? 'question' : 'questions'} about what you find
-          meaningful. After answering question #{this.props.numberOfQuestions}, you'll learn how
-          much each love language means to you.
-        </Text>
-        <BorderlessButton onPress={this._startQuizAsync} style={styles.startButton}>
-          <Text style={styles.startButtonText}>Start the Quiz</Text>
-        </BorderlessButton>
-      </ScrollView>
-    );
-  }
-
-  _startQuizAsync = async () => {
-    this.props.navigation.navigate('QuizQuestion', { index: 0 });
+  const startQuizAsync = async () => {
+    navigation.navigate('QuizQuestion', { index: 0 });
     await Sounds.playEffectAsync(Sounds.completion);
   };
+
+  return (
+    <ScrollView
+      alwaysBounceVertical={false}
+      contentContainerStyle={styles.contentContainer}
+      style={styles.container}>
+      <Text style={styles.text}>
+        The love languages quiz has {numberOfQuestions}{' '}
+        {numberOfQuestions === 1 ? 'question' : 'questions'} about what you find
+        meaningful. After answering question #{numberOfQuestions}, you'll learn how
+        much each love language means to you.
+      </Text>
+      <BorderlessButton onPress={startQuizAsync} style={styles.startButton}>
+        <Text style={styles.startButtonText}>Start the Quiz</Text>
+      </BorderlessButton>
+    </ScrollView>
+  );
 }
 
-export default connect(state => ({
-  numberOfQuestions: state.quiz.questions.length,
-}))(QuizIntroScreen);
+QuizIntroScreen.options = {
+  title: 'Take the Quiz',
+};
 
 const styles = StyleSheet.create({
   container: {
