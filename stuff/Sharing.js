@@ -1,4 +1,4 @@
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 
 import Quiz from '../quiz/Quiz';
 
@@ -28,10 +28,10 @@ function getShareMessage(primaryLanguages) {
   }
 
   let linkPhrase;
-  if (Constants.appOwnership === 'expo') {
+  if (Constants.executionEnvironment === 'storeClient') {
+    // TODO: use the Google Play and App Store URLs
     linkPhrase = expoProjectUri;
   } else {
-    // TODO: use the Google Play and App Store URLs
     linkPhrase = expoProjectUri;
   }
   sentences.push(`Take the quiz with this app to find out your love language too: ${linkPhrase}`);
