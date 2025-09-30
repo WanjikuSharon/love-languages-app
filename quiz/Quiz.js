@@ -27,8 +27,6 @@ const singleQuestions = [
       language: Languages.PHYSICAL_TOUCH,
     },
   ],
-];
-let x = [
   [
     {
       text: `I can spend alone time with someone I love — just us.`,
