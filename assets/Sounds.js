@@ -1,4 +1,4 @@
-import { Audio } from 'expo';
+import { Audio } from 'expo-av';
 import { Platform } from 'react-native';
 
 const _enabled = Platform.OS === 'ios';
