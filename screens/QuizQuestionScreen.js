@@ -1,133 +1,101 @@
-import { GestureHandler } from 'expo';
+import React, { useEffect } from 'react';
 import invariant from 'invariant';
-import PropTypes from 'prop-types';
-import React from 'react';
 import { ScrollView, StyleSheet, Text, ViewPropTypes } from 'react-native';
-import { connect } from 'react-redux';
+import { RectButton } from 'react-native-gesture-handler';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Sounds from '../assets/Sounds';
 import Quiz from '../quiz/Quiz';
 import Actions from '../store/Actions';
 import Theme from '../styles/Theme';
 
-const { RectButton } = GestureHandler;
+export default function QuizQuestionScreen() {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const dispatch = useDispatch();
+  
+  const { index: questionIndex } = route.params;
+  const { questions, answers } = useSelector(state => state.quiz);
+  
+  const question = questions[questionIndex];
+  const answer = answers[questionIndex];
+  const numberOfQuestions = questions.length;
 
-class QuizQuestionScreen extends React.Component {
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    navigation: PropTypes.object.isRequired,
-    question: PropTypes.arrayOf(PropTypes.object).isRequired,
-    answer: PropTypes.object,
-    numberOfQuestions: PropTypes.number.isRequired,
-  };
-
-  static navigationOptions({ navigation }) {
-    let routeParams = navigation.state.params;
-    let questionIndex = routeParams.index;
-    return {
-      title: `Question ${questionIndex + 1} / 30`,
-    };
-  }
-
-  constructor(props) {
-    super(props);
-
-    let routeParams = this.props.navigation.state.params;
-    let questionIndex = routeParams.index;
+  useEffect(() => {
     invariant(questionIndex >= 0, 'Question index must be positive');
     invariant(
-      questionIndex < this.props.numberOfQuestions,
+      questionIndex < numberOfQuestions,
       'Question index must be less than the number of questions'
     );
-  }
+    
+    navigation.setOptions({
+      title: `Question ${questionIndex + 1} / ${numberOfQuestions}`,
+    });
+  }, [questionIndex, numberOfQuestions, navigation]);
 
-  render() {
-    return (
-      <ScrollView
-        alwaysBounceVertical={false}
-        contentContainerStyle={styles.contentContainer}
-        style={styles.container}>
-        <Text style={styles.prompt}>{Quiz.prompt}</Text>
-        {this.props.question.map((choice, ii) => (
-          <QuizQuestionChoice
-            key={choice.text}
-            text={choice.text}
-            selected={choice === this.props.answer}
-            onSelect={() => {
-              this._selectChoiceAsync(choice);
-            }}
-            style={[
-              styles.choice,
-              ii === this.props.question.length - 1 ? styles.lastChoice : null,
-            ]}
-          />
-        ))}
-      </ScrollView>
-    );
-  }
+  const selectChoiceAsync = async (choice) => {
+    dispatch(Actions.chooseAnswer(questionIndex, choice));
+    await navigateToNextScreenAsync();
+  };
 
-  async _selectChoiceAsync(choice) {
-    let routeParams = this.props.navigation.state.params;
-    let currentQuestionIndex = routeParams.index;
+  const navigateToNextScreenAsync = async () => {
+    const nextQuestionIndex = questionIndex + 1;
 
-    this.props.dispatch(Actions.chooseAnswer(currentQuestionIndex, choice));
-
-    await this._navigateToNextScreenAsync();
-  }
-
-  async _navigateToNextScreenAsync() {
-    let routeParams = this.props.navigation.state.params;
-    let currentQuestionIndex = routeParams.index;
-    let nextQuestionIndex = currentQuestionIndex + 1;
-
-    if (nextQuestionIndex < this.props.numberOfQuestions) {
-      this.props.navigation.navigate('QuizQuestion', {
+    if (nextQuestionIndex < numberOfQuestions) {
+      navigation.navigate('QuizQuestion', {
         index: nextQuestionIndex,
       });
       await Sounds.playEffectAsync(Sounds.buttonPress);
     } else {
-      this.props.navigation.navigate('QuizResult');
+      navigation.navigate('QuizResult');
       await Sounds.playEffectAsync(Sounds.completion);
     }
-  }
-}
-
-export default connect((state, ownProps) => {
-  let { questions, answers } = state.quiz;
-  let routeParams = ownProps.navigation.state.params;
-  return {
-    question: questions[routeParams.index],
-    answer: answers[routeParams.index],
-    numberOfQuestions: questions.length,
-  };
-})(QuizQuestionScreen);
-
-class QuizQuestionChoice extends React.PureComponent {
-  static propTypes = {
-    text: PropTypes.string.isRequired,
-    selected: PropTypes.bool,
-    onSelect: PropTypes.func,
-    style: ViewPropTypes.style,
   };
 
-  render() {
-    return (
-      <RectButton
-        disallowInterruption
-        underlayColor={this.props.selected ? Theme.lightTextColor : Theme.primaryColor}
-        onPress={this.props.onSelect}
-        style={[
-          styles.choiceButton,
-          this.props.selected ? styles.selectedChoiceButton : null,
-          this.props.style,
-        ]}>
-        <Text style={[styles.choiceText, this.props.selected ? styles.selectedChoiceText : null]}>
-          {this.props.text}
-        </Text>
-      </RectButton>
-    );
-  }
+  return (
+    <ScrollView
+      alwaysBounceVertical={false}
+      contentContainerStyle={styles.contentContainer}
+      style={styles.container}>
+      <Text style={styles.prompt}>{Quiz.prompt}</Text>
+      {question.map((choice, ii) => (
+        <QuizQuestionChoice
+          key={choice.text}
+          text={choice.text}
+          selected={choice === answer}
+          onSelect={() => {
+            selectChoiceAsync(choice);
+          }}
+          style={[
+            styles.choice,
+            ii === question.length - 1 ? styles.lastChoice : null,
+          ]}
+        />
+      ))}
+    </ScrollView>
+  );
 }
+
+function QuizQuestionChoice({ text, selected, onSelect, style }) {
+  return (
+    <RectButton
+      disallowInterruption
+      underlayColor={selected ? Theme.lightTextColor : Theme.primaryColor}
+      onPress={onSelect}
+      style={[
+        styles.choiceButton,
+        selected ? styles.selectedChoiceButton : null,
+        style,
+      ]}>
+      <Text style={[styles.choiceText, selected ? styles.selectedChoiceText : null]}>
+        {text}
+      </Text>
+    </RectButton>
+  );
+}
+
+
 
 const styles = StyleSheet.create({
   container: {
