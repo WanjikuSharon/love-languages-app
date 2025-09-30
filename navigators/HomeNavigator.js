@@ -1,47 +1,41 @@
-import { createStackNavigator } from 'react-navigation';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import CreditNavigator from './CreditNavigator';
-import QuizNavigator from './QuizNavigator';
 import HomeScreen from '../screens/HomeScreen';
+import QuizNavigator from './QuizNavigator';
+import CreditNavigator from './CreditNavigator';
+import Theme from '../styles/Theme';
 
-const HomeNavigator = createStackNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-    },
-    Credits: {
-      path: 'credits',
-      screen: CreditNavigator,
-    },
-    Quiz: {
-      path: 'quiz',
-      screen: QuizNavigator,
-    },
-  },
-  {
-    initialRouteName: 'Quiz',
-    mode: 'modal',
-    headerMode: 'none',
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  }
-);
+const Stack = createStackNavigator();
 
-// Override the INIT action so that we can display the home screen above the quiz screen
-const defaultGetStateForAction = HomeNavigator.router.getStateForAction;
-HomeNavigator.router.getStateForAction = (action, state) => {
-  let defaultState = defaultGetStateForAction(action, state);
-
-  if (action.type === 'Navigation/INIT') {
-    defaultState.routes.push({
-      key: 'Init-home',
-      routeName: 'Home',
-    });
-    defaultState.index = defaultState.routes.length - 1;
-  }
-
-  return defaultState;
-};
-
-export default HomeNavigator;
+export default function HomeNavigator() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Theme.primaryColor,
+        },
+        headerTintColor: Theme.lightTextColor,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen 
+        name="Quiz" 
+        component={QuizNavigator} 
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Credits" 
+        component={CreditNavigator} 
+        options={{ 
+          headerShown: false,
+          presentation: 'modal'
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
