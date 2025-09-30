@@ -1,42 +1,38 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import QuizIntroScreen from '../screens/QuizIntroScreen';
 import QuizQuestionScreen from '../screens/QuizQuestionScreen';
 import QuizResultScreen from '../screens/QuizResultScreen';
 import Theme from '../styles/Theme';
 
-// export default class QuizNavigatorContainer extends React.Component {
-//   render() {
-//     return <QuizNavigator navigation={this.props.navigation} screenProps={{ parentNavigation: this.props.navigation }} />;
-//   }
-// }
+const Stack = createStackNavigator();
 
-const QuizNavigator = createStackNavigator(
-  {
-    QuizIntro: {
-      screen: QuizIntroScreen,
-    },
-    QuizQuestion: {
-      path: 'question/:index',
-      screen: QuizQuestionScreen,
-    },
-    QuizResult: {
-      path: 'result',
-      screen: QuizResultScreen,
-      navigationOptions: {
-        headerLeft: null,
-        gesturesEnabled: false,
-      },
-    },
-  },
-  {
-    initialRouteName: 'QuizIntro',
-    defaultNavigationOptions: {
-      headerStyle: { backgroundColor: Theme.primaryColor },
-      headerTintColor: Theme.lightTextColor,
-    },
-  }
-);
-
-export default QuizNavigator;
+export default function QuizNavigator() {
+  return (
+    <Stack.Navigator
+      initialRouteName="QuizIntro"
+      screenOptions={{
+        headerStyle: { backgroundColor: Theme.primaryColor },
+        headerTintColor: Theme.lightTextColor,
+      }}
+    >
+      <Stack.Screen 
+        name="QuizIntro" 
+        component={QuizIntroScreen}
+      />
+      <Stack.Screen 
+        name="QuizQuestion" 
+        component={QuizQuestionScreen}
+      />
+      <Stack.Screen 
+        name="QuizResult" 
+        component={QuizResultScreen}
+        options={{
+          headerLeft: () => null,
+          gestureEnabled: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
