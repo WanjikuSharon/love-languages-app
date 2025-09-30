@@ -1,40 +1,26 @@
-import { Asset } from 'expo';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import Quiz from '../quiz/Quiz';
 import Theme from '../styles/Theme';
 
-export default class LanguageExplanation extends React.PureComponent {
-  static propTypes = {
-    voice: PropTypes.oneOf(['first-person', 'second-person']).isRequired,
-    language: PropTypes.string.isRequired,
-    style: ViewPropTypes.style,
-  };
-
-  render() {
-    let iconSource = Theme.languageIcons[this.props.language];
-    let iconAsset = Asset.fromModule(iconSource);
-
-    return (
-      <View style={[styles.container, this.props.style]}>
-        <Image
-          source={Theme.languageIcons[this.props.language]}
-          style={[
-            styles.languageIcon,
-            {
-              aspectRatio: iconAsset.width / iconAsset.height,
-              tintColor: Theme.languageColors[this.props.language],
-            },
-          ]}
-        />
-        <Text style={styles.explanationText}>
-          {_getExplanation(this.props.language, this.props.voice)}
-        </Text>
-      </View>
-    );
-  }
+export default function LanguageExplanation({ voice, language, style }) {
+  return (
+    <View style={[styles.container, style]}>
+      <Image
+        source={Theme.languageIcons[language]}
+        style={[
+          styles.languageIcon,
+          {
+            tintColor: Theme.languageColors[language],
+          },
+        ]}
+      />
+      <Text style={styles.explanationText}>
+        {_getExplanation(language, voice)}
+      </Text>
+    </View>
+  );
 }
 
 function _getExplanation(language, voice) {
