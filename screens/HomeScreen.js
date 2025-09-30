@@ -1,30 +1,34 @@
-import { GestureHandler } from 'expo';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Animated, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { connect } from 'react-redux';
+import { GestureHandlerRootView, BaseButton, BorderlessButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Actions from '../store/Actions';
 import Theme from '../styles/Theme';
 
-const { BaseButton, BorderlessButton } = GestureHandler;
-
 const AnimatedBaseButton = Animated.createAnimatedComponent(BaseButton);
 
-class HomeScreen extends React.Component {
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    navigation: PropTypes.object.isRequired,
+export default function HomeScreen() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const startButtonOpacity = useRef(new Animated.Value(1)).current;
+
+  const handleButtonActiveStateChange = (isActive) => {
+    startButtonOpacity.setValue(isActive ? 0.7 : 1);
   };
 
-  static navigationOptions = {
-    title: 'Love Languages',
+  const startQuiz = () => {
+    dispatch(Actions.startQuiz());
+    navigation.navigate('Quiz');
   };
 
-  _startButtonOpacity = new Animated.Value(1);
+  const showCredits = () => {
+    navigation.navigate('Credits');
+  };
 
-  render() {
-    return (
+  return (
+    <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <ScrollView
           alwaysBounceVertical={false}
@@ -44,38 +48,27 @@ class HomeScreen extends React.Component {
             <AnimatedBaseButton
               disallowInterruption
               shouldActivateOnStart
-              onActiveStateChange={this._handleButtonActiveStateChange}
-              onPress={this._startQuiz}
-              style={[styles.startButton, { opacity: this._startButtonOpacity }]}>
+              onActiveStateChange={handleButtonActiveStateChange}
+              onPress={startQuiz}
+              style={[styles.startButton, { opacity: startButtonOpacity }]}>
               <Text style={styles.startButtonText}>Take the Quiz</Text>
             </AnimatedBaseButton>
           </View>
           <BorderlessButton
             disallowInterruption
-            onPress={this._showCredits}
+            onPress={showCredits}
             style={styles.creditsButton}>
             <Text style={styles.creditsButtonText}>Credits and Acknowledgements</Text>
           </BorderlessButton>
         </ScrollView>
       </SafeAreaView>
-    );
-  }
-
-  _handleButtonActiveStateChange = isActive => {
-    this._startButtonOpacity.setValue(isActive ? 0.7 : 1);
-  };
-
-  _startQuiz = () => {
-    this.props.dispatch(Actions.startQuiz());
-    this.props.navigation.goBack();
-  };
-
-  _showCredits = () => {
-    this.props.navigation.navigate('Credits');
-  };
+    </GestureHandlerRootView>
+  );
 }
 
-export default connect()(HomeScreen);
+HomeScreen.options = {
+  title: 'Love Languages',
+};
 
 const styles = StyleSheet.create({
   container: {
