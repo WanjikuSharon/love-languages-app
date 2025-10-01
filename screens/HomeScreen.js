@@ -66,9 +66,7 @@ export default function HomeScreen() {
   );
 }
 
-HomeScreen.options = {
-  title: 'Love Languages',
-};
+// Remove the options property that might be causing issues
 
 const styles = StyleSheet.create({
   container: {
