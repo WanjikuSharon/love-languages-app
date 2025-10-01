@@ -57,7 +57,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.primaryColor,
+    backgroundColor: '#9c27b0',
     flex: 1,
   },
   scrollContainer: {
@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   heading: {
-    color: Theme.lightTextColor,
-    fontFamily: 'athena',
-    fontSize: 80,
+    color: '#ffffff',
+    fontSize: 60,
+    fontWeight: 'bold',
     marginTop: 36,
     marginBottom: 12,
     textAlign: 'center',
@@ -81,23 +81,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: Theme.lightTextColor,
-    fontFamily: 'chasing-hearts',
-    fontSize: 24,
+    color: '#ffffff',
+    fontSize: 18,
+    lineHeight: 24,
     marginBottom: 20,
+    textAlign: 'center',
   },
   startButton: {
     alignSelf: 'center',
     backgroundColor: '#fff',
-    borderRadius: 8,
-    marginTop: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    borderRadius: 25,
+    marginTop: 30,
+    paddingHorizontal: 30,
+    paddingVertical: 15,
   },
   startButtonText: {
-    color: Theme.primaryDarkColor,
-    fontSize: 17,
+    color: '#9c27b0',
+    fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   creditsButton: {
     alignSelf: 'center',
@@ -105,6 +107,8 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
   },
   creditsButtonText: {
-    color: Theme.subtleTextColor,
+    color: '#ffffff',
+    fontSize: 14,
+    opacity: 0.8,
   },
 });
