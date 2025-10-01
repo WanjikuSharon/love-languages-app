@@ -1,10 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from 'expo-font';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 
 import Store from './store/Store';
 import HomeNavigator from './navigators/HomeNavigator';
+import Sounds from './assets/Sounds';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -35,14 +41,51 @@ class ErrorBoundary extends React.Component {
 }
 
 export default function App() {
-  console.log('App rendering...');
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    athena: require('./assets/fonts/athena-of-the-ocean.ttf'),
+    'chasing-hearts': require('./assets/fonts/chasing-hearts.ttf'),
+  });
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        console.log('Loading sounds...');
+        await Sounds.loadAsync();
+        console.log('Sounds loaded successfully');
+      } catch (e) {
+        console.warn('Error loading sounds:', e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady && fontsLoaded) {
+      console.log('Hiding splash screen');
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady, fontsLoaded]);
+
+  if (!appIsReady || !fontsLoaded) {
+    return null;
+  }
+
+  console.log('App rendering with fonts and sounds loaded');
   
   return (
     <ErrorBoundary>
       <Provider store={Store}>
-        <NavigationContainer>
-          <HomeNavigator />
-        </NavigationContainer>
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <StatusBar barStyle="light-content" />
+          <NavigationContainer>
+            <HomeNavigator />
+          </NavigationContainer>
+        </View>
       </Provider>
     </ErrorBoundary>
   );
