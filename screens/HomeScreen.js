@@ -1,68 +1,55 @@
-import React, { useRef } from 'react';
-import { Animated, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { GestureHandlerRootView, BaseButton, BorderlessButton } from 'react-native-gesture-handler';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import Actions from '../store/Actions';
 import Theme from '../styles/Theme';
 
-const AnimatedBaseButton = Animated.createAnimatedComponent(BaseButton);
-
 export default function HomeScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const startButtonOpacity = useRef(new Animated.Value(1)).current;
-
-  const handleButtonActiveStateChange = (isActive) => {
-    startButtonOpacity.setValue(isActive ? 0.7 : 1);
-  };
 
   const startQuiz = () => {
+    console.log('Starting quiz...');
     dispatch(Actions.startQuiz());
     navigation.navigate('Quiz');
   };
 
   const showCredits = () => {
+    console.log('Showing credits...');
     navigation.navigate('Credits');
   };
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          alwaysBounceVertical={false}
-          contentContainerStyle={styles.contentContainer}
-          style={styles.scrollContainer}>
-          <Text style={styles.heading}>Love Languages</Text>
-          <View style={styles.body}>
-            <Text style={styles.text}>
-              Love languages are different ways in which we connect with the people close to us. We
-              each respond to the love languages in our own ways—some of us especially appreciate
-              reaffirming compliments and others find a thoughtful gift particularly heartwarming.
-            </Text>
-            <Text style={styles.text}>
-              With a minute or two and this app, you can discover your own love languages and help
-              those close to you show they care.
-            </Text>
-            <AnimatedBaseButton
-              disallowInterruption
-              shouldActivateOnStart
-              onActiveStateChange={handleButtonActiveStateChange}
-              onPress={startQuiz}
-              style={[styles.startButton, { opacity: startButtonOpacity }]}>
-              <Text style={styles.startButtonText}>Take the Quiz</Text>
-            </AnimatedBaseButton>
-          </View>
-          <BorderlessButton
-            disallowInterruption
-            onPress={showCredits}
-            style={styles.creditsButton}>
-            <Text style={styles.creditsButtonText}>Credits and Acknowledgements</Text>
-          </BorderlessButton>
-        </ScrollView>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        style={styles.scrollContainer}>
+        <Text style={styles.heading}>Love Languages</Text>
+        <View style={styles.body}>
+          <Text style={styles.text}>
+            Love languages are different ways in which we connect with the people close to us. We
+            each respond to the love languages in our own ways—some of us especially appreciate
+            reaffirming compliments and others find a thoughtful gift particularly heartwarming.
+          </Text>
+          <Text style={styles.text}>
+            With a minute or two and this app, you can discover your own love languages and help
+            those close to you show they care.
+          </Text>
+          <TouchableOpacity
+            onPress={startQuiz}
+            style={styles.startButton}>
+            <Text style={styles.startButtonText}>Take the Quiz</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          onPress={showCredits}
+          style={styles.creditsButton}>
+          <Text style={styles.creditsButtonText}>Credits and Acknowledgements</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
