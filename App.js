@@ -38,11 +38,13 @@ export default function App() {
   console.log('App rendering...');
   
   return (
-    <Provider store={Store}>
-      <NavigationContainer>
-        <HomeNavigator />
-      </NavigationContainer>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={Store}>
+        <NavigationContainer>
+          <HomeNavigator />
+        </NavigationContainer>
+      </Provider>
+    </ErrorBoundary>
   );
 }
 
