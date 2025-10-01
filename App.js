@@ -15,6 +15,10 @@ import HomeNavigator from './navigators/HomeNavigator';
 import Store from './store/Store';
 */
 
+// Export the test component for debugging
+export default TestApp;
+
+/*
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
@@ -71,3 +75,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+*/
