@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 
 import Store from './store/Store';
+import HomeNavigator from './navigators/HomeNavigator';
 
 // Simple test to see if Redux store is the issue
 function SimpleHomeScreen() {
@@ -27,9 +28,7 @@ export default function App() {
   return (
     <Provider store={Store}>
       <NavigationContainer>
-        <View style={styles.container}>
-          <SimpleHomeScreen />
-        </View>
+        <HomeNavigator />
       </NavigationContainer>
     </Provider>
   );
