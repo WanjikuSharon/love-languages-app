@@ -33,9 +33,7 @@ export default function QuizIntroScreen() {
   );
 }
 
-QuizIntroScreen.options = {
-  title: 'Take the Quiz',
-};
+// Remove options property that might cause issues
 
 const styles = StyleSheet.create({
   container: {
