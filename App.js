@@ -1,3 +1,8 @@
+// Temporarily use test component to debug white screen
+import TestApp from './TestApp';
+
+// Comment out original imports for debugging
+/*
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -8,6 +13,7 @@ import { Provider } from 'react-redux';
 import Sounds from './assets/Sounds';
 import HomeNavigator from './navigators/HomeNavigator';
 import Store from './store/Store';
+*/
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
