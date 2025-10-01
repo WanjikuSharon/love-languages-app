@@ -1,12 +1,8 @@
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
-import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 
-import Sounds from './assets/Sounds';
-import HomeNavigator from './navigators/HomeNavigator';
 import Store from './store/Store';
 
 // Keep the splash screen visible while we fetch resources
