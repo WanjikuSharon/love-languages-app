@@ -1,29 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet } from 'react-native';
 
 import HomeScreen from '../screens/HomeScreen';
+import QuizNavigator from './QuizNavigator';
+import CreditScreen from '../screens/CreditScreen';
 
 const Stack = createStackNavigator();
-
-// Temporary simple screens for testing
-function QuizScreen() {
-  return (
-    <View style={styles.testScreen}>
-      <Text style={styles.testText}>Quiz Screen</Text>
-      <Text style={styles.testSubtext}>Navigation working! 🎉</Text>
-    </View>
-  );
-}
-
-function CreditsScreen() {
-  return (
-    <View style={styles.testScreen}>
-      <Text style={styles.testText}>Credits Screen</Text>
-      <Text style={styles.testSubtext}>Navigation working! 🎉</Text>
-    </View>
-  );
-}
 
 export default function HomeNavigator() {
   return (
@@ -46,34 +28,14 @@ export default function HomeNavigator() {
       />
       <Stack.Screen 
         name="Quiz" 
-        component={QuizScreen}
-        options={{ title: 'Take the Quiz' }}
+        component={QuizNavigator}
+        options={{ headerShown: false }}
       />
       <Stack.Screen 
         name="Credits" 
-        component={CreditsScreen}
+        component={CreditScreen}
         options={{ title: 'Credits' }}
       />
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  testScreen: {
-    flex: 1,
-    backgroundColor: '#9c27b0',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  testText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 10,
-  },
-  testSubtext: {
-    fontSize: 18,
-    color: 'white',
-  },
-});
