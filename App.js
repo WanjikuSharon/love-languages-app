@@ -6,20 +6,32 @@ import { Provider } from 'react-redux';
 import Store from './store/Store';
 import HomeNavigator from './navigators/HomeNavigator';
 
-// Simple test to see if Redux store is the issue
-function SimpleHomeScreen() {
-  return (
-    <View style={styles.homeContainer}>
-      <Text style={styles.title}>Love Languages</Text>
-      <Text style={styles.subtitle}>React Navigation v6 Migration</Text>
-      <Text style={styles.description}>
-        Love languages are different ways in which we connect with the people close to us.
-      </Text>
-      <View style={styles.button}>
-        <Text style={styles.buttonText}>Take the Quiz</Text>
-      </View>
-    </View>
-  );
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>Something went wrong:</Text>
+          <Text style={styles.errorDetails}>{this.state.error?.toString()}</Text>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
 }
 
 export default function App() {
