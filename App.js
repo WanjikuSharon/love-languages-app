@@ -5,82 +5,32 @@ import { Provider } from 'react-redux';
 
 import Store from './store/Store';
 
-// Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();
+// Simple test to see if Redux store is the issue
+function SimpleHomeScreen() {
+  return (
+    <View style={styles.homeContainer}>
+      <Text style={styles.title}>Love Languages</Text>
+      <Text style={styles.subtitle}>React Navigation v6 Migration</Text>
+      <Text style={styles.description}>
+        Love languages are different ways in which we connect with the people close to us.
+      </Text>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>Take the Quiz</Text>
+      </View>
+    </View>
+  );
+}
 
 export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
-  const [error, setError] = useState(null);
-
-  const [fontsLoaded, fontError] = useFonts({
-    athena: require('./assets/fonts/athena-of-the-ocean.ttf'),
-    'chasing-hearts': require('./assets/fonts/chasing-hearts.ttf'),
-  });
-
-  useEffect(() => {
-    async function prepare() {
-      try {
-        console.log('Loading sounds...');
-        // Pre-load sounds
-        await Sounds.loadAsync();
-        console.log('Sounds loaded successfully');
-      } catch (e) {
-        console.warn('Error loading sounds:', e);
-        setError('Sounds loading failed: ' + e.message);
-      } finally {
-        // Tell the application to render
-        setAppIsReady(true);
-      }
-    }
-
-    prepare();
-  }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady && fontsLoaded) {
-      console.log('Hiding splash screen');
-      // This tells the splash screen to hide immediately
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady, fontsLoaded]);
-
-  // Show error if fonts fail to load
-  if (fontError) {
-    return (
-      <View style={[styles.container, styles.errorContainer]}>
-        <Text style={styles.errorText}>Font Error: {fontError.message}</Text>
-      </View>
-    );
-  }
-
-  // Show error if app fails to initialize
-  if (error) {
-    return (
-      <View style={[styles.container, styles.errorContainer]}>
-        <Text style={styles.errorText}>{error}</Text>
-      </View>
-    );
-  }
-
-  // Show loading state
-  if (!appIsReady || !fontsLoaded) {
-    return (
-      <View style={[styles.container, styles.loadingContainer]}>
-        <Text style={styles.loadingText}>Loading Love Languages App...</Text>
-      </View>
-    );
-  }
-
-  console.log('Rendering main app');
-
+  console.log('App rendering...');
+  
   return (
     <Provider store={Store}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <StatusBar barStyle="light-content" />
-        <NavigationContainer>
-          <HomeNavigator />
-        </NavigationContainer>
-      </View>
+      <NavigationContainer>
+        <View style={styles.container}>
+          <SimpleHomeScreen />
+        </View>
+      </NavigationContainer>
     </Provider>
   );
 }
@@ -90,25 +40,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  errorContainer: {
+  homeContainer: {
+    flex: 1,
+    backgroundColor: '#9c27b0',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ff6b6b',
-  },
-  errorText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
     padding: 20,
   },
-  loadingContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9c27b0',
-  },
-  loadingText: {
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
     color: 'white',
-    fontSize: 18,
     textAlign: 'center',
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center', 
+    marginBottom: 20,
+  },
+  description: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 30,
+    lineHeight: 24,
+  },
+  button: {
+    backgroundColor: 'white',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 25,
+  },
+  buttonText: {
+    color: '#9c27b0',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
