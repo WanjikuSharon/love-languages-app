@@ -91,4 +91,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  errorContainer: {
+    flex: 1,
+    backgroundColor: '#ff6b6b',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  errorDetails: {
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+  },
 });
