@@ -2,7 +2,7 @@ import invariant from 'invariant';
 import maxBy from 'lodash/maxBy';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import LanguageExplanation from '../components/LanguageExplanation';
 import QuizResultChart from '../components/QuizResultChart';
@@ -12,7 +12,7 @@ export default class QuizResult extends React.Component {
   static propTypes = {
     voice: PropTypes.oneOf(['first-person', 'second-person']).isRequired,
     results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-    style: ViewPropTypes.style,
+    style: PropTypes.object,
   };
 
   static defaultProps = {
@@ -63,7 +63,7 @@ class QuizResultSummary extends React.PureComponent {
   static propTypes = {
     voice: PropTypes.oneOf(['first-person', 'second-person']).isRequired,
     primaryLanguages: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    style: Text.propTypes.style,
+    style: PropTypes.object,
   };
 
   render() {
