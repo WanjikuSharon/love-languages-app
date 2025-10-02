@@ -1,27 +1,19 @@
-// import * as FileSystem from 'expo-file-system';
-// import * as MediaLibrary from 'expo-media-library';
-// import { captureRef } from 'react-native-view-shot';
 import invariant from 'invariant';
 import countBy from 'lodash/countBy';
 import maxBy from 'lodash/maxBy';
 import values from 'lodash/values';
-import React, { useEffect, useRef, useState } from 'react';
-import { Platform, Share, StyleSheet, Text, View } from 'react-native';
-import { ScrollView, BorderlessButton } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { Platform, Share, StyleSheet, Text, View, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
-import HeaderRightButton from '../components/HeaderRightButton';
 import QuizResult from '../components/QuizResult';
 import Quiz from '../quiz/Quiz';
-import Prompt from '../stuff/Prompt';
 import Sharing from '../stuff/Sharing';
-import Theme from '../styles/Theme';
 
 export default function QuizResultScreen() {
   const navigation = useNavigation();
   const [didShare, setDidShare] = useState(false);
-  const savableResultsViewRef = useRef();
   
   const results = useSelector(state => {
     const scores = countBy(state.quiz.answers, answer => answer.language);
@@ -93,26 +85,23 @@ export default function QuizResultScreen() {
 
   return (
     <ScrollView
-      alwaysBounceVertical={false}
       contentContainerStyle={styles.contentContainer}
       style={styles.container}>
       <QuizResult
-        ref={savableResultsViewRef}
         voice="second-person"
         results={results}
         style={styles.content}
       />
       <View style={[styles.content, styles.buttons]}>
-        <BorderlessButton
-          disallowInterruption
+        <TouchableOpacity
           onPress={shareQuizAsync}
           style={[styles.button, styles.spacedButton]}>
           <Text style={styles.buttonText}>Share Your Quiz</Text>
-        </BorderlessButton>
+        </TouchableOpacity>
 
-        <BorderlessButton disallowInterruption onPress={restartAsync} style={styles.button}>
+        <TouchableOpacity onPress={restartAsync} style={styles.button}>
           <Text style={styles.buttonText}>Start Again</Text>
-        </BorderlessButton>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -135,16 +124,16 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    backgroundColor: Theme.primaryColor,
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    backgroundColor: '#9c27b0',
+    borderRadius: 25,
+    paddingHorizontal: 30,
+    paddingVertical: 15,
   },
   spacedButton: {
     marginBottom: 20,
   },
   buttonText: {
-    color: Theme.lightTextColor,
+    color: '#ffffff',
     fontSize: 17,
     fontWeight: 'bold',
     minWidth: 180,
