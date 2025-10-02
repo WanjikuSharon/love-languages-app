@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import invariant from 'invariant';
-import { ScrollView, StyleSheet, Text, ViewPropTypes } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Sounds from '../assets/Sounds';
 import Quiz from '../quiz/Quiz';
 import Actions from '../store/Actions';
-import Theme from '../styles/Theme';
 
 export default function QuizQuestionScreen() {
   const navigation = useNavigation();
@@ -79,9 +77,7 @@ export default function QuizQuestionScreen() {
 
 function QuizQuestionChoice({ text, selected, onSelect, style }) {
   return (
-    <RectButton
-      disallowInterruption
-      underlayColor={selected ? Theme.lightTextColor : Theme.primaryColor}
+    <TouchableOpacity
       onPress={onSelect}
       style={[
         styles.choiceButton,
@@ -91,7 +87,7 @@ function QuizQuestionChoice({ text, selected, onSelect, style }) {
       <Text style={[styles.choiceText, selected ? styles.selectedChoiceText : null]}>
         {text}
       </Text>
-    </RectButton>
+    </TouchableOpacity>
   );
 }
 
@@ -112,6 +108,8 @@ const styles = StyleSheet.create({
     fontFamily: 'chasing-hearts',
     fontSize: 24,
     marginBottom: 32,
+    color: '#333',
+    textAlign: 'center',
   },
   choice: {
     marginBottom: 28,
@@ -120,23 +118,23 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   choiceButton: {
-    borderColor: Theme.primaryColor,
+    borderColor: '#9c27b0',
     borderRadius: 16,
     borderWidth: 2,
     justifyContent: 'center',
     minHeight: 80,
-    overflow: 'hidden',
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
   selectedChoiceButton: {
-    backgroundColor: Theme.primaryColor,
+    backgroundColor: '#9c27b0',
   },
   choiceText: {
-    color: Theme.darkTextColor,
+    color: '#17051a',
     fontSize: 17,
+    textAlign: 'center',
   },
   selectedChoiceText: {
-    color: Theme.lightTextColor,
+    color: '#ffffff',
   },
 });
