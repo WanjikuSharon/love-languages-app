@@ -1,14 +1,14 @@
 import maxBy from 'lodash/maxBy';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Animated, StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
 import Theme from '../styles/Theme';
 
 export default class QuizResultChart extends React.Component {
   static propTypes = {
     results: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-    style: ViewPropTypes.style,
+    style: PropTypes.object,
   };
 
   state = {
@@ -56,7 +56,7 @@ class ChartRow extends React.PureComponent {
     barColor: PropTypes.string.isRequired,
     barWidth: PropTypes.number.isRequired,
     onBarContainerLayout: PropTypes.func,
-    style: ViewPropTypes.style,
+    style: PropTypes.object,
   };
 
   render() {
