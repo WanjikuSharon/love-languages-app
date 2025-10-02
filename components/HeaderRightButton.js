@@ -1,27 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Theme from '../styles/Theme';
 
-export default class HeaderRightButton extends React.Component {
-  static propTypes = {
-    textStyle: PropTypes.object,
-    onPress: PropTypes.func,
-    style: PropTypes.object,
-  };
-
-  render() {
-    let { style, textStyle, ...props } = this.props;
-    return (
-      <BorderlessButton {...props} style={[styles.button, style]}>
-        <Text numberOfLines={1} style={[styles.buttonText, textStyle]}>
-          {this.props.children}
-        </Text>
-      </BorderlessButton>
-    );
-  }
+export default function HeaderRightButton({ onPress, children, style, textStyle }) {
+  return (
+    <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+      <Text numberOfLines={1} style={[styles.buttonText, textStyle]}>
+        {children}
+      </Text>
+    </TouchableOpacity>
+  );
 }
+
+HeaderRightButton.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  style: PropTypes.object,
+  textStyle: PropTypes.object,
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -30,7 +28,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   buttonText: {
-    color: Theme.lightTextColor,
+    color: '#ffffff',
     fontSize: 17,
+    fontWeight: '600',
   },
 });
