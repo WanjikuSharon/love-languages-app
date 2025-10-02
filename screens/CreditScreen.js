@@ -89,7 +89,7 @@ class IconCredit extends React.PureComponent {
     name: PropTypes.string.isRequired,
     creator: PropTypes.string.isRequired,
     uri: PropTypes.string.isRequired,
-    style: Text.propTypes.style,
+    style: PropTypes.object,
   };
 
   render() {
