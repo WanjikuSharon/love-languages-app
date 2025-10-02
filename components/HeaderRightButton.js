@@ -6,8 +6,9 @@ import Theme from '../styles/Theme';
 
 export default class HeaderRightButton extends React.Component {
   static propTypes = {
-    ...BorderlessButton.propTypes,
-    textStyle: Text.propTypes.style,
+    textStyle: PropTypes.object,
+    onPress: PropTypes.func,
+    style: PropTypes.object,
   };
 
   render() {
