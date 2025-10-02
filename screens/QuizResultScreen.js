@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import QuizResult from '../components/QuizResult';
 import Quiz from '../quiz/Quiz';
 import Sharing from '../stuff/Sharing';
+import Prompt from '../stuff/Prompt';
 
 export default function QuizResultScreen() {
   const navigation = useNavigation();
