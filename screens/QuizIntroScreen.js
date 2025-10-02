@@ -1,6 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
@@ -17,7 +16,6 @@ export default function QuizIntroScreen() {
 
   return (
     <ScrollView
-      alwaysBounceVertical={false}
       contentContainerStyle={styles.contentContainer}
       style={styles.container}>
       <Text style={styles.text}>
@@ -26,14 +24,12 @@ export default function QuizIntroScreen() {
         meaningful. After answering question #{numberOfQuestions}, you'll learn how
         much each love language means to you.
       </Text>
-      <BorderlessButton onPress={startQuizAsync} style={styles.startButton}>
+      <TouchableOpacity onPress={startQuizAsync} style={styles.startButton}>
         <Text style={styles.startButtonText}>Start the Quiz</Text>
-      </BorderlessButton>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
-
-// Remove options property that might cause issues
 
 const styles = StyleSheet.create({
   container: {
@@ -43,24 +39,27 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     flex: 1,
-    paddingBottom: 20,
+    justifyContent: 'center',
     paddingHorizontal: 24,
-    paddingTop: 32,
   },
   text: {
     fontFamily: 'chasing-hearts',
-    fontSize: 24,
-    marginBottom: 32,
+    fontSize: 22,
+    lineHeight: 30,
+    marginBottom: 40,
+    textAlign: 'center',
+    color: '#333',
   },
   startButton: {
     backgroundColor: '#9c27b0',
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    borderRadius: 25,
+    paddingHorizontal: 30,
+    paddingVertical: 15,
   },
   startButtonText: {
     color: '#fff',
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
