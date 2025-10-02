@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: '#ffffff',
+    fontFamily: 'athena',
     fontSize: 60,
-    fontWeight: 'bold',
     marginTop: 36,
     marginBottom: 12,
     textAlign: 'center',
@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#ffffff',
-    fontSize: 18,
-    lineHeight: 24,
+    fontFamily: 'chasing-hearts',
+    fontSize: 20,
+    lineHeight: 28,
     marginBottom: 20,
     textAlign: 'center',
   },
