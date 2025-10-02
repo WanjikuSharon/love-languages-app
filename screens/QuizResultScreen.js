@@ -37,7 +37,13 @@ export default function QuizResultScreen() {
   useEffect(() => {
     navigation.setOptions({
       title: 'Your Love Language',
-      headerRight: () => <HeaderRightButton onPress={saveResultsAsync}>Save</HeaderRightButton>,
+      headerStyle: {
+        backgroundColor: '#9c27b0',
+      },
+      headerTintColor: '#ffffff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     });
   }, [navigation]);
 
